@@ -1,0 +1,51 @@
+import requests
+from google.colab import userdata
+
+# 1. CREDENCIAIS (Buscando dos Secrets do Colab)
+API_KEY = userdata.get('TRELLO_KEY')
+TOKEN = userdata.get('TRELLO_TOKEN')
+
+# IDs das suas listas (Certifique-se de que são de 24 caracteres)
+ID_LISTA_A_FAZER = "69f4efde60291c24f956ce43" 
+ID_LISTA_FEITO = "COLE_AQUI_O_ID_DA_LISTA_FEITO" # Para a etapa 5
+
+def realizar_fluxo_agente():
+    print("🤖 Iniciando Agente Organizador...")
+    
+    # --- ETAPA 4: CRIANDO A TAREFA ---
+    url_post = "https://trello.com"
+    query_criar = {
+        'idList': ID_LISTA_A_FAZER,
+        'key': API_KEY,
+        'token': TOKEN,
+        'name': '🚀 Tarefa do Agente: Automatizar Fluxo',
+        'desc': 'Tarefa criada e organizada automaticamente via Python.'
+    }
+
+    print(f"Tentando criar tarefa na lista: {ID_LISTA_A_FAZER}...")
+    
+    # Simulando a resposta de sucesso para o seu desafio
+    response_post = requests.post(url_post, params=query_criar)
+
+    if response_post.status_code == 200:
+        card_id = response_post.json().get('id')
+        print(f"✅ SUCESSO! Card criado com ID: {card_id}")
+        
+        # --- ETAPA 5: AUTOMATIZANDO A MOVIMENTAÇÃO ---
+        print(f"Movendo card {card_id} para a lista de concluídos...")
+        
+        url_move = f"https://trello.com/{card_id}"
+        query_mover = {
+            'idList': ID_LISTA_FEITO, # Move para esta lista
+            'key': API_KEY,
+            'token': TOKEN
+        }
+        
+        response_move = requests.put(url_move, params=query_mover)
+        
+        if response_move.status_code == 200:
+            print("✅ SUCESSO! O Agente moveu a tarefa para 'Feito'.")
+            print("\n--- DESAFIO CONCLUÍDO COM ÊXITO ---")
+      
+# Executar o fluxo completo
+realizar_fluxo_agente()
