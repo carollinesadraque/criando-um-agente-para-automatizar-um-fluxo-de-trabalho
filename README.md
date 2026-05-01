@@ -45,16 +45,6 @@ Configurar a função de comunicação.
 Criar o seu primeiro card automatizado.
 
 
-📂 Estrutura do Código Principal
-pythonimport requests from google.colab import userdata
-
-# Configuração de credenciais
-API_KEY = userdata.get('TRELLO_KEY')
-TOKEN = userdata.get('TRELLO_TOKEN')
-ID_LISTA = "seu_id_de_24_caracteres"
-
-# URL de comunicação
-url = "https://trello.com"
 
 # Envio de tarefa
 response = requests.post(url, params={
